@@ -1,17 +1,18 @@
 from pydantic import BaseSettings
-from dotenv import load_dotenv
-from os import getenv
+from decouple import config
 
 class Settings(BaseSettings):
     API_V1: str = "/api/v1"
-    MARVEL_PUBLIC_KEY: str = getenv('MARVEL_PUBLIC_KEY')
-    MARVEL_HASH_CODE: str = getenv('MARVEL_HASH_CODE')
-    MARVEL_URL: str = getenv('MARVEL_URL')
-    MARVEL_CHARACTERS_ENDPOINT: str = getenv('MARVEL_CHARACTERS_ENDPOINT')
-    MARVEL_COMICS_ENDPOINT: str = getenv('MARVEL_COMICS_ENDPOINT')
+    MARVEL_PUBLIC_KEY: str = config('MARVEL_PUBLIC_KEY')
+    MARVEL_HASH_CODE: str = config('MARVEL_HASH_CODE')
+    MARVEL_URL: str = config('MARVEL_URL')
+    MONGO_URI: str = config("MONGO_URI", cast=str)
+    MONGO_DB_NAME: str = config('MONGO_DB_NAME')
     MARVEL_SECURITY_PARAMS: dict = {}
+    MARVEL_CHARACTERS_ENDPOINT: str = config('MARVEL_CHARACTERS_ENDPOINT')
+    MARVEL_COMICS_ENDPOINT: str = config('MARVEL_COMICS_ENDPOINT')
+    # BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = []    
 
-load_dotenv()
 settings = Settings()
 settings.MARVEL_SECURITY_PARAMS = {'ts': 1, 
                                    'apikey': settings.MARVEL_PUBLIC_KEY,

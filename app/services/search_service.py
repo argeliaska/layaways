@@ -22,7 +22,7 @@ class SearchService():
             print('comic')
             results = ComicService.find_by_title(comic)
         else:
-            print('character.list')
+            print('Character.list')
             results = CharacterService.list()
 
         return results
