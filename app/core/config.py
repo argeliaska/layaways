@@ -11,7 +11,11 @@ class Settings(BaseSettings):
     MARVEL_SECURITY_PARAMS: dict = {}
     MARVEL_CHARACTERS_ENDPOINT: str = config('MARVEL_CHARACTERS_ENDPOINT')
     MARVEL_COMICS_ENDPOINT: str = config('MARVEL_COMICS_ENDPOINT')
-    # BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = []    
+    JWT_SECRET_KEY: str = config("JWT_SECRET_KEY", cast=str)
+    JWT_REFRESH_SECRET_KEY: str = config("JWT_REFRESH_SECRET_KEY", cast=str)
+    ALGORITHM = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES = 30
+    REFRESH_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7 # 7 days
 
 settings = Settings()
 settings.MARVEL_SECURITY_PARAMS = {'ts': 1, 
