@@ -43,7 +43,7 @@ async def http_exception_handler(request: Request, exc: HTTPException):
 @app.on_event("startup")
 async def startup_db_client():
     try:
-        db_client = AsyncIOMotorClient(settings.MONGO_URI).layaways
+        db_client = AsyncIOMotorClient(settings.MONGO_URI, serverSelectionTimeoutMS=10).layaways
 
         await init_beanie(
                 database=db_client,
