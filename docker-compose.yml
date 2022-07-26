@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  layaways-api:
+    depends_on:
+      - layaways-api-db
+    env_file:
+      - .env
+    image: layaways-api:0.1.0
+    build: .
+    container_name: layaways-api
+    ports:
+      - 8000:8000
+    volumes:
+      - ./app:/app
+    networks:
+      - layaways-back-net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "5"
+
+  layaways-api-db:
+    image: mongo:5.0.9
+    container_name: layaways-api-db
+    ports:
+      - 27019:27017
+    command: mongod --quiet --logpath /dev/null
+    volumes:
+      - db_data:/data/db
+    networks:
+      - layaways-back-net
+    logging:
+      driver: none
+
+volumes:
+  db_data: 
+
+networks:
+  layaways-back-net:
